@@ -8,29 +8,51 @@
 * { box-sizing: border-box; }
 
 body, html {
-    margin: 0; padding: 0; height: 100%; width: 100%;
+    margin: 0; padding: 0; 
+    height: 100%; width: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f4f7f6; overflow-x: hidden;
+    background: #f4f7f6; 
+    overflow: hidden; /* Empêche le scroll global du body */
 }
 
-.app-container { display: flex; flex-direction: column; height: 100vh; }
+/* Conteneur principal - CORRIGÉ */
+.app-container { 
+    display: flex; 
+    flex-direction: column; 
+    height: 100vh; /* Force la hauteur exacte de l'écran */
+}
 
+/* Tablette et Desktop */
 @media (min-width: 768px) {
     .app-container { flex-direction: row; }
-    .workshop-area { width: 350px; border-left: 2px solid #ddd; }
 }
 
-/* Grille adaptative pour Mobile */
+/* --- ZONE DE LA GRILLE (Haut sur mobile, Gauche sur Desktop) --- */
 .grid-area {
-    flex: 1; display: flex; justify-content: center;
-    align-items: center; padding: 10px; background: #dfe6e9;
+    /* Sur mobile, on lui donne une hauteur fixe pour stabiliser la grille en haut */
+    height: 60vh; 
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    padding: 10px; 
+    background: #dfe6e9;
+    flex: none; /* Ne s'écrase pas */
+}
+
+/* Ajustement Desktop pour la Grille */
+@media (min-width: 768px) {
+    .grid-area { height: 100vh; flex: 1; }
 }
 
 .letter-grid {
     display: grid;
-    /* On divise l'écran en 15 colonnes pour que tout tienne */
-    grid-template-columns: repeat(15, calc(95vw / 16)); 
-    gap: 2px; background: white; padding: 5px; border-radius: 5px;
+    /* Calcul réactif pour les colonnes */
+    grid-template-columns: repeat(15, calc(90vw / 16)); 
+    gap: 2px; 
+    background: white; 
+    padding: 5px; 
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 @media (min-width: 768px) {
@@ -38,38 +60,137 @@ body, html {
 }
 
 .cell {
-    aspect-ratio: 1; border: 1px solid #eee;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: bold; font-size: 11px; cursor: pointer;
+    aspect-ratio: 1; 
+    border: 1px solid #eee;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-weight: bold; 
+    /* Police un peu plus grande pour mobile pour la lisibilité */
+    font-size: 13px; 
+    cursor: pointer;
     touch-action: manipulation;
+    background: white;
+}
+
+@media (min-width: 768px) {
+    .cell { font-size: 16px; }
 }
 
 .cell.selected { background: var(--highlight); color: #000; }
-.cell.found { background: var(--success) !important; color: white; }
+.cell.found { background: var(--success) !important; color: white; box-shadow: inset 0 0 5px rgba(0,0,0,0.2); }
 
-/* Atelier */
-.workshop-area { padding: 15px; background: white; overflow-y: auto; }
-.anagram-item { background: #e1f5fe; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
-.scrambled { display: block; font-weight: bold; color: var(--primary); margin-bottom: 5px; }
-
-.word-input {
-    width: 100%; padding: 10px; font-size: 16px; 
-    border: 2px solid #bdc3c7; border-radius: 4px; text-transform: uppercase;
+/* --- ZONE DE L'ATELIER (Bas sur mobile, Droite sur Desktop) --- */
+.workshop-area { 
+    flex: 1; /* Prend tout l'espace restant */
+    padding: 15px; 
+    background: white; 
+    overflow-y: auto; /* Scroll uniquement ici */
+    -webkit-overflow-scrolling: touch; /* Scroll fluide iOS */
+    border-top: 2px solid #ddd;
+    /* Zone tampon pour le clavier mobile */
+    padding-bottom: 80px; 
 }
 
-/* Modales */
+/* Ajustement Desktop pour l'Atelier */
+@media (min-width: 768px) {
+    .workshop-area { 
+        width: 380px; 
+        flex: none; 
+        border-top: none; 
+        border-left: 2px solid #ddd; 
+        padding-bottom: 20px;
+    }
+}
+
+.workshop-area h3 { margin-top: 0; color: var(--dark); }
+
+.anagram-item { 
+    background: #e1f5fe; 
+    padding: 12px; 
+    margin-bottom: 12px; 
+    border-radius: 8px; 
+    border: 1px solid #b3e5fc;
+}
+
+.scrambled { 
+    display: block; 
+    font-weight: bold; 
+    color: var(--primary); 
+    margin-bottom: 8px; 
+    letter-spacing: 1px;
+}
+
+.word-input {
+    width: 100%; 
+    padding: 12px; 
+    /* Important pour mobile : 16px minimum pour éviter le zoom */
+    font-size: 16px;  
+    border: 2px solid #bdc3c7; 
+    border-radius: 4px; 
+    text-transform: uppercase;
+    background: white;
+    transition: border-color 0.2s;
+}
+
+.word-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* --- MODALES & OVERLAYS --- */
 #login-overlay, .modal-overlay {
-    position: fixed; inset: 0; background: var(--dark);
-    display: flex; justify-content: center; align-items: center; z-index: 1000;
+    position: fixed; 
+    inset: 0; 
+    background: rgba(44, 62, 80, 0.9); /* Semi-transparent */
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    z-index: 1000;
+    backdrop-filter: blur(3px); /* Effet de flou */
 }
 
 .login-box, .feedback-box {
-    background: white; padding: 25px; border-radius: 12px;
-    width: 90%; max-width: 400px; text-align: center;
+    background: white; 
+    padding: 30px; 
+    border-radius: 15px;
+    width: 90%; 
+    max-width: 400px; 
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.login-box h2 { color: var(--primary); margin-top: 0; }
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 button {
-    width: 100%; padding: 12px; margin-top: 10px;
-    background: var(--primary); color: white; border: none;
-    border-radius: 5px; font-weight: bold; cursor: pointer;
+    width: 100%; 
+    padding: 12px; 
+    margin-top: 10px;
+    background: var(--primary); 
+    color: white; 
+    border: none;
+    border-radius: 5px; 
+    font-weight: bold; 
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+button:hover { background: #21618c; }
+button:disabled { background: #bdc3c7; cursor: not-allowed; }
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    resize: none;
+    margin-bottom: 10px;
 }
