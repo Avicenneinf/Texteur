@@ -1,0 +1,75 @@
+:root {
+    --primary: #2980b9;
+    --success: #27ae60;
+    --highlight: #f1c40f;
+    --dark: #2c3e50;
+}
+
+* { box-sizing: border-box; }
+
+body, html {
+    margin: 0; padding: 0; height: 100%; width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7f6; overflow-x: hidden;
+}
+
+.app-container { display: flex; flex-direction: column; height: 100vh; }
+
+@media (min-width: 768px) {
+    .app-container { flex-direction: row; }
+    .workshop-area { width: 350px; border-left: 2px solid #ddd; }
+}
+
+/* Grille adaptative pour Mobile */
+.grid-area {
+    flex: 1; display: flex; justify-content: center;
+    align-items: center; padding: 10px; background: #dfe6e9;
+}
+
+.letter-grid {
+    display: grid;
+    /* On divise l'écran en 15 colonnes pour que tout tienne */
+    grid-template-columns: repeat(15, calc(95vw / 16)); 
+    gap: 2px; background: white; padding: 5px; border-radius: 5px;
+}
+
+@media (min-width: 768px) {
+    .letter-grid { grid-template-columns: repeat(15, 32px); }
+}
+
+.cell {
+    aspect-ratio: 1; border: 1px solid #eee;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 11px; cursor: pointer;
+    touch-action: manipulation;
+}
+
+.cell.selected { background: var(--highlight); color: #000; }
+.cell.found { background: var(--success) !important; color: white; }
+
+/* Atelier */
+.workshop-area { padding: 15px; background: white; overflow-y: auto; }
+.anagram-item { background: #e1f5fe; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
+.scrambled { display: block; font-weight: bold; color: var(--primary); margin-bottom: 5px; }
+
+.word-input {
+    width: 100%; padding: 10px; font-size: 16px; 
+    border: 2px solid #bdc3c7; border-radius: 4px; text-transform: uppercase;
+}
+
+/* Modales */
+#login-overlay, .modal-overlay {
+    position: fixed; inset: 0; background: var(--dark);
+    display: flex; justify-content: center; align-items: center; z-index: 1000;
+}
+
+.login-box, .feedback-box {
+    background: white; padding: 25px; border-radius: 12px;
+    width: 90%; max-width: 400px; text-align: center;
+}
+
+button {
+    width: 100%; padding: 12px; margin-top: 10px;
+    background: var(--primary); color: white; border: none;
+    border-radius: 5px; font-weight: bold; cursor: pointer;
+}
