@@ -41,7 +41,6 @@ const eleves = [
   { massar: "F188177286", nom: "MAKTAN ABDELALI", date: "04/11/2013" },
   { massar: "F195028405", nom: "JINAH IMRANE", date: "03/04/2013" },
   { massar: "F197046555", nom: "EL FAKIR SAAD", date: "30/07/2013" },
-  { massar: "F198215979", nom: "SAEED Saqer Ahmed", date: "18/08/2012" }
 ];
 
 let currentUser = null;
