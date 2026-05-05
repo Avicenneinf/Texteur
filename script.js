@@ -28,7 +28,6 @@ const eleves = [
   { massar: "F197081485", nom: "CHHIHAB FATINE", date: "22/07/2013" },
   { massar: "F199081532", nom: "EL HAYAN MERIEM", date: "15/08/2013" },
   { massar: "F199166256", nom: "ERWADI ILYAS", date: "10/02/2014" },
-  { massar: "F199187902", nom: "JABIRY CHAHD", date: "04/11/2013" },
   { massar: "F199193309", nom: "AYOUT ZINEB", date: "17/10/2012" },
   { massar: "G197074506", nom: "MORABIT HAJAR", date: "13/02/2013" },
   { massar: "F181173584", nom: "HADRI ADAM", date: "23/03/2013" },
@@ -38,7 +37,6 @@ const eleves = [
   { massar: "F165012130", nom: "EL MOUHILI AMINE", date: "15/04/2010" },
   { massar: "F199033664", nom: "AITLAABAR IMRANE", date: "05/08/2013" },
   { massar: "C191138785", nom: "QASSIMI IBRAHIM", date: "27/06/2013" },
-  { massar: "F188177286", nom: "MAKTAN ABDELALI", date: "04/11/2013" },
   { massar: "F195028405", nom: "JINAH IMRANE", date: "03/04/2013" },
   { massar: "F197046555", nom: "EL FAKIR SAAD", date: "30/07/2013" },
 ];
